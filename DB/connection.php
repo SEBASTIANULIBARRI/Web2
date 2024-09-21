@@ -5,7 +5,7 @@ $username = "root";
 $password = "";
 $conexion = false;
 try {
-  $conn = new PDO("mysql:host=$servername;dbname=tarea_practica", $username, $password);
+  $conn = new PDO("mysql:host=$servername;dbname=db_tareas", $username, $password);
   // set the PDO error mode to exception
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $conexion =true;
@@ -41,11 +41,11 @@ try {
     return $task;
   }
  
-  function insertTask($Tarea, $descripcion, $lineas) {
+  function insertTask( $titulo, $descripcion, $prioridad, $finalizada) {
     $db = getConnection();
  
-    $query = $db->prepare('INSERT INTO tareas(`Tarea`, `descripcion`, `lineas`) VALUES (?, ?, ?)');
-    $query->execute([$Tarea, $descripcion, $lineas]);
+    $query = $db->prepare('INSERT INTO tareas( `titulo`, `descripcion`, `prioridad`, `finalizada`) VALUES (?, ?, ?, ?)');
+    $query->execute([$titulo, $descripcion, $prioridad, $finalizada]);
  
     $id = $db->lastInsertId();
  
@@ -63,8 +63,8 @@ try {
  function updateTask($id,$Tarea, $descripcion, $lineas) {
     $db = getConnection();
     
-    $query = $db->prepare('UPDATE `tareas` SET `Tarea`=?,`descripcion`=?,`lineas`=? WHERE id = ?');
-    $query->execute([$Tarea, $descripcion, $lineas,$id]);
+    $query = $db->prepare('UPDATE tareas SET finalizada = 1 WHERE id = ?');
+    $query->execute([$id]);
  }
 
 
